@@ -13,10 +13,10 @@ public class Origin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1"))
-        {
-            originReset();
-        }
+        //if (Input.GetButton("Fire1"))
+        //{
+        //    originReset();
+        //}
     }
     public void setCtroller(TestCtrl t)
     {

@@ -13,10 +13,10 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire2"))
-        {
-            trigger();
-        }
+        //if (Input.GetButton("Fire2"))
+        //{
+        //    trigger();
+        //}
     }
     public void setCtroller(TestCtrl t)
     {
