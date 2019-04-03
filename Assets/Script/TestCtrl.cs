@@ -108,7 +108,9 @@ public class TestCtrl : MonoBehaviour
         trans.transform.position = origin_gameObj.transform.position;
         trans.transform.Translate(new Vector3(0, 0, currentDist));
         trans.transform.RotateAround(origin_gameObj.transform.position, Vector3.left, rotate_deg);
-        return trans.transform.position;
+        Vector3 res = trans.transform.position;
+        Destroy(trans);
+        return res;
     }
     public void aimReset()
     {
