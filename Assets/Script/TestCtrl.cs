@@ -12,6 +12,11 @@ public class TestCtrl : MonoBehaviour
     public string FolderName = "D:\\Data\\WriteoutTest\\1";
     public string FileName = "Test1";
 
+    public float distance_gap = 0.5f;
+    public int distance_level_min = 1;
+    public int distance_level_max = 4;
+
+    public float target_appear_time = 1.5f;
 
     private string OutputDir;
     public float currentDist;
@@ -24,18 +29,21 @@ public class TestCtrl : MonoBehaviour
     Byte[] writebytes;
 
     float startTime;
-    float endTime;
+    float gazeTime;
+    float aimTime;
 
-    bool isAiming;
+    bool aim_ready = false;
+    bool hasLooked = false;
+    bool hasAimed = false;
     // Start is called before the first frame update
     void Start()
     {
         // create a folder 
-        string OutputDir = Path.Combine(FolderName, string.Concat(DateTime.Now.ToString("MM-dd-yyyy"), FileName));
+        string OutputDir = Path.Combine(FolderName, string.Concat(DateTime.Now.ToString("MM-dd-yyyy") + "-" + FileName));
         Directory.CreateDirectory(OutputDir);
 
         // create a file to record data
-        String trialOutput = Path.Combine(OutputDir, DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + "_Results.txt");
+        String trialOutput = Path.Combine(OutputDir, DateTime.Now.ToString("HH-mm") + ".txt");
         trialStreams = new FileStream(trialOutput, FileMode.Create, FileAccess.Write);
 
 
@@ -65,7 +73,7 @@ public class TestCtrl : MonoBehaviour
             );
         //add column names
         stringBuilder.Append(
-            "FrameNumber\t" + "StartTime\t" + "EndTime\t" + "ReactionTime\t" + "DistanceToOrigin"+ Environment.NewLine
+            "FrameNumber\t" + "StartTime\t" + "GazeTime\t" + "AimTime\t" + "GazeDuration\t" + "AimDuration\t" + "DistanceToOrigin"+ Environment.NewLine
                         );
 
 
@@ -81,8 +89,10 @@ public class TestCtrl : MonoBehaviour
         stringBuilder.Append(
                     Time.frameCount + "\t"
                     + startTime + "\t" 
-                    + endTime + "\t"
-                    + (endTime - startTime) + "\t"
+                    + gazeTime + "\t"
+                    + aimTime + "\t"
+                    + Math.Max((gazeTime - startTime),0) + "\t"
+                    + (aimTime - startTime) + "\t"
                     + currentDist
                     + Environment.NewLine
                 );
@@ -94,15 +104,33 @@ public class TestCtrl : MonoBehaviour
     void Update()
     {
 
+        if (aim_ready && hasAimed)
+        {
+            WriteFile();
+            reset_test();
+        }
     }
+    /// <summary>
+    /// Reset the test
+    /// </summary>
+    void reset_test()
+    {
+        startTime = float.NaN;
+        gazeTime = float.NaN;
+        aimTime = float.NaN;
+        aim_ready = false;
+        hasLooked = false;
+        hasAimed = false;
+    }
+
     /// <summary>
     /// Returns a random transform for target spawn in vector3
     /// </summary>
     /// <returns></returns>
     Vector3 randomTransform()
     {
-        int dist_level = UnityEngine.Random.Range(1, 4);
-        currentDist = dist_level * 0.5f;
+        int dist_level = UnityEngine.Random.Range(distance_level_min, distance_level_max);
+        currentDist = dist_level * distance_gap;
         float rotate_deg = UnityEngine.Random.Range(0, 360);
         GameObject trans = new GameObject("targetTrans");
         trans.transform.position = origin_gameObj.transform.position;
@@ -114,28 +142,35 @@ public class TestCtrl : MonoBehaviour
     }
     public void aimReset()
     {
-        if (!isAiming)
+        if (!aim_ready)
         {
-            isAiming = true;
-            StartCoroutine(wait(1f));
+            aim_ready = true;
+            StartCoroutine(wait_n_generate_target(target_appear_time));
         }
     }
-    public void targetClicked()
+    public void target_looked()
     {
-        if (isAiming)
+        if (aim_ready && !hasLooked)
         {
-            endTime = Time.time * 1000;
-            WriteFile();
-            isAiming = false;
+            gazeTime = Time.time;
+            hasLooked = true;
         }
     }
-    IEnumerator wait(float time)
+    public void target_aimed()
+    {
+        if (aim_ready && !hasAimed)
+        {
+            aimTime = Time.time;
+            hasAimed = true;
+        }
+    }
+    IEnumerator wait_n_generate_target(float time)
     {
         yield return new WaitForSeconds(time);
         GameObject tar = GameObject.Instantiate(target_prefab);
         tar.transform.Translate(randomTransform());
         Target target_mono = tar.GetComponent<Target>();
         target_mono.setCtroller(this);
-        startTime = Time.time * 1000;
+        startTime = Time.time;
     }
 }

@@ -4,6 +4,8 @@ using System.Collections;
 public class Target : MonoBehaviour
 {
     protected TestCtrl testCtrl;
+    bool isLooked = false;
+    bool isAimed = false;
     // Use this for initialization
     void Start()
     {
@@ -13,19 +15,24 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetButton("Fire2"))
+        //if (isLooked && isAimed)
         //{
-        //    trigger();
+        //    Destroy(gameObject);
         //}
     }
     public void setCtroller(TestCtrl t)
     {
         testCtrl = t;
     }
-    public void trigger()
+    public void aimed()
     {
-        Debug.Log("clickedTarget");
-        testCtrl.targetClicked();
+        Debug.Log("Target Aimed");
+        testCtrl.target_aimed();
         Destroy(gameObject);
+    }
+    public void looked()
+    {
+        Debug.Log("Target Looked");
+        testCtrl.target_looked();
     }
 }

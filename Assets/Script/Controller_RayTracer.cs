@@ -33,7 +33,7 @@ public class Controller_RayTracer : MonoBehaviour
             if (obj.tag == "target")
             {
                 Target mono = obj.GetComponent<Target>();
-                mono.trigger();
+                mono.aimed();
             }
         }
         else

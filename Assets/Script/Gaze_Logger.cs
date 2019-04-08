@@ -18,7 +18,7 @@ namespace PupilLabs
     public class Gaze_Logger : MonoBehaviour
     {
 
-        public string FolderName = "D:\\Data\\GazePosition";
+        public string FolderName = "D:\\Data\\Boyuan_ReactionTime\\GazeLog";
         private string OutputDir;
 
         //Things you want to write out, set them in the inspector
