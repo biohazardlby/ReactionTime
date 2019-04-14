@@ -9,8 +9,8 @@ public class TestCtrl : MonoBehaviour
     public GameObject origin_prefab;
     public GameObject target_prefab;
 
-    public string FolderName = "D:\\Data\\WriteoutTest\\1";
-    public string FileName = "Test1";
+    public string FolderName = "D:\\Data\\Boyuan_ReactionTime";
+    public string FileName = "ReactionTime";
 
     public float distance_gap = 0.5f;
     public int distance_level_min = 1;
@@ -18,6 +18,7 @@ public class TestCtrl : MonoBehaviour
 
     public float target_appear_time = 1.5f;
     public float target_scale = 1.0f;
+    public Transform origin_trans;
 
     private string OutputDir;
     public float currentDist;
@@ -53,7 +54,14 @@ public class TestCtrl : MonoBehaviour
 
         //initiate origin
         origin_gameObj = GameObject.Instantiate(origin_prefab);
-        origin_gameObj.transform.Translate(new Vector3(-4,2,0));
+        if (origin_trans == null)
+        {
+            origin_gameObj.transform.Translate(new Vector3(-4, 3, 0));
+        }
+        else
+        {
+            origin_gameObj.transform.Translate(origin_trans.position);
+        }
         origin_gameObj.GetComponent<Origin>().setCtroller(this);
     }
 
@@ -172,7 +180,7 @@ public class TestCtrl : MonoBehaviour
         tar.transform.Translate(randomTransform());
         tar.transform.localScale = new Vector3(target_scale, target_scale, target_scale);
         Target target_mono = tar.GetComponent<Target>();
-        target_mono.setCtroller(this);
+        target_mono.set_controller(this);
         startTime = Time.realtimeSinceStartup;
     }
 }

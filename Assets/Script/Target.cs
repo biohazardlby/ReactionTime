@@ -20,7 +20,7 @@ public class Target : MonoBehaviour
         //    Destroy(gameObject);
         //}
     }
-    public void setCtroller(TestCtrl t)
+    public void set_controller(TestCtrl t)
     {
         testCtrl = t;
     }

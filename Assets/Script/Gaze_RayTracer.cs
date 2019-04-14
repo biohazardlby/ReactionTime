@@ -43,11 +43,24 @@ namespace PupilLabs
         float plConfidence;
         float plTimeStamp;
 
+        LineRenderer line_render;
+
         string mode;
 
         void Start()
         {
-            //connect to pupil lab
+            line_render = GetComponent<LineRenderer>();
+            if (line_render == null)
+            {
+                Debug.LogWarning("No line renderer found in gaze raytracer");
+            }
+            else
+            {
+                line_render.positionCount = 2;
+                line_render.material = new Material(Shader.Find("Sprites/Default"));
+            }
+
+
             gazeListener = new GazeListener(PupilConnection);
             gazeListener.OnReceive3dGaze += ReceiveGaze;
         }
@@ -118,12 +131,15 @@ namespace PupilLabs
         public void Update()
         {
             int layerMask = 1 << 8;
+            Vector3 eye_vec = plEIH1_xyz;
             if (fake_eyeball == null)
             {
+                line_render.SetPosition(0, cameraTransform.position);
+                line_render.SetPosition(1, cameraTransform.position + (eye_vec * 10));
                 RaycastHit hit;
-                if (Physics.Raycast(cameraTransform.position,plEIH0_xyz,out hit, Mathf.Infinity, layerMask))
+                if (Physics.Raycast(cameraTransform.position, cameraTransform.TransformDirection(eye_vec), out hit, Mathf.Infinity, layerMask))
                 {
-                    Debug.DrawRay(cameraTransform.position, plEIH0_xyz * hit.distance, Color.cyan);
+                    Debug.DrawRay(cameraTransform.position, eye_vec * hit.distance, Color.cyan);
                     GameObject obj = hit.collider.gameObject;
                     if (obj.tag == "target")
                     {
@@ -134,19 +150,12 @@ namespace PupilLabs
             }
             else
             {
-
-
                 RaycastHit hit;
 
                 if (Physics.Raycast(fake_eyeball.position, fake_eyeball.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
                 {
                     Debug.DrawRay(fake_eyeball.position, fake_eyeball.TransformDirection(Vector3.forward) * hit.distance, Color.blue);
                     GameObject obj = hit.collider.gameObject;
-                    //if (obj.tag == "origin")
-                    //{
-                    //    Origin mono = obj.GetComponent<Origin>();
-                    //    mono.originReset();
-                    //}
                     if (obj.tag == "target")
                     {
                         Target mono = obj.GetComponent<Target>();
@@ -156,7 +165,7 @@ namespace PupilLabs
                 else
                 {
                     Debug.DrawRay(fake_eyeball.position, fake_eyeball.TransformDirection(Vector3.forward) * 1000, Color.red);
-                    Debug.Log("Did not Hit");
+                    Debug.Log("Did not look");
                 }
             }
 
