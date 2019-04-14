@@ -17,6 +17,7 @@ public class TestCtrl : MonoBehaviour
     public int distance_level_max = 4;
 
     public float target_appear_time = 1.5f;
+    public float target_scale = 1.0f;
 
     private string OutputDir;
     public float currentDist;
@@ -66,7 +67,7 @@ public class TestCtrl : MonoBehaviour
         stringBuilder.Append(
         DateTime.Now.ToString() + "\t" +
         "The file contains time data of each successful point movement " + Environment.NewLine +
-        "The time is using Unity time." + Environment.NewLine
+        "The time is using Unity real time." + Environment.NewLine
         );
         stringBuilder.Append("-------------------------------------------------" +
             Environment.NewLine
@@ -152,7 +153,7 @@ public class TestCtrl : MonoBehaviour
     {
         if (aim_ready && !hasLooked)
         {
-            gazeTime = Time.time;
+            gazeTime = Time.realtimeSinceStartup;
             hasLooked = true;
         }
     }
@@ -160,7 +161,7 @@ public class TestCtrl : MonoBehaviour
     {
         if (aim_ready && !hasAimed)
         {
-            aimTime = Time.time;
+            aimTime = Time.realtimeSinceStartup;
             hasAimed = true;
         }
     }
@@ -169,8 +170,9 @@ public class TestCtrl : MonoBehaviour
         yield return new WaitForSeconds(time);
         GameObject tar = GameObject.Instantiate(target_prefab);
         tar.transform.Translate(randomTransform());
+        tar.transform.localScale = new Vector3(target_scale, target_scale, target_scale);
         Target target_mono = tar.GetComponent<Target>();
         target_mono.setCtroller(this);
-        startTime = Time.time;
+        startTime = Time.realtimeSinceStartup;
     }
 }
