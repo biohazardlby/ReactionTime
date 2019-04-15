@@ -25,8 +25,6 @@ namespace PupilLabs
 
         public bool visualize_gaze;
 
-        public TestCtrl Test_Controller;
-
         public Transform fake_eyeball;
 
         //Initialize some containers
@@ -134,8 +132,8 @@ namespace PupilLabs
             Vector3 eye_vec = plEIH1_xyz;
             if (fake_eyeball == null)
             {
-                line_render.SetPosition(0, cameraTransform.position);
-                line_render.SetPosition(1, cameraTransform.position + (eye_vec * 10));
+                //line_render.SetPosition(0, cameraTransform.position);
+                //line_render.SetPosition(1, cameraTransform.position + (eye_vec * 10));
                 RaycastHit hit;
                 if (Physics.Raycast(cameraTransform.position, cameraTransform.TransformDirection(eye_vec), out hit, Mathf.Infinity, layerMask))
                 {

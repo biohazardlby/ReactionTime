@@ -310,7 +310,7 @@ namespace PupilLabs
                     Debug.Log("Stop writing");
                 }
             }
-            if (startWriting) ;
+            if (startWriting)
             {
                 WriteFile();
             }
