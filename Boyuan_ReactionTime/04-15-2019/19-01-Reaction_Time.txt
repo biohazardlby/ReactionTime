@@ -1,0 +1,4 @@
+4/15/2019 7:01:20 PM	The file contains time data of each successful point movement 
+The time is using Unity real time.
+-------------------------------------------------
+FrameNumber	StartTime	GazeTime	AimTime	GazeDuration	AimDuration	DistanceToOrigin

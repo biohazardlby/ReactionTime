@@ -81,6 +81,7 @@ namespace PupilLabs
 
             switch (gazeData.Mode)
             {
+                
                 case GazeData.GazeDataMode.Binocular:
 
                     plConfidence = gazeData.Confidence;
@@ -128,16 +129,18 @@ namespace PupilLabs
 
         public void Update()
         {
+
             int layerMask = 1 << 8;
-            Vector3 eye_vec = plEIH1_xyz;
+            //Vector3 eye_vec = Vector3.Normalize(plEIH1_xyz + plEIH1_xyz);
             if (fake_eyeball == null)
             {
                 //line_render.SetPosition(0, cameraTransform.position);
-                //line_render.SetPosition(1, cameraTransform.position + (eye_vec * 10));
+                //line_render.SetPosition(1, cameraTransform.position + cameraTransform.TransformDirection(eye_vec) * 10);
                 RaycastHit hit;
-                if (Physics.Raycast(cameraTransform.position, cameraTransform.TransformDirection(eye_vec), out hit, Mathf.Infinity, layerMask))
+                if (Physics.Raycast(cameraTransform.position, Vector3.Normalize(cameraTransform.rotation * plGiwVector_xyz), out hit, Mathf.Infinity, layerMask))
+                //if (Physics.Raycast(cameraTransform.position, cameraTransform.rotation * eye_vec, out hit, Mathf.Infinity, layerMask))
                 {
-                    Debug.DrawRay(cameraTransform.position, eye_vec * hit.distance, Color.cyan);
+                    //Debug.DrawRay(cameraTransform.position, eye_vec * hit.distance, Color.cyan);
                     GameObject obj = hit.collider.gameObject;
                     if (obj.tag == "target")
                     {
@@ -166,12 +169,6 @@ namespace PupilLabs
                     Debug.Log("Did not look");
                 }
             }
-
-        }
-
-        public void OnApplicationQuit()
-        {
-
 
         }
 
