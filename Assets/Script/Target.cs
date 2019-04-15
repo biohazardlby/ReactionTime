@@ -6,6 +6,7 @@ public class Target : MonoBehaviour
     protected TestCtrl testCtrl;
     bool isLooked = false;
     bool isAimed = false;
+    public bool react_gaze = false;
     // Use this for initialization
     void Start()
     {
@@ -33,6 +34,10 @@ public class Target : MonoBehaviour
     public void looked()
     {
         Debug.Log("Target Looked");
+        if (react_gaze)
+        {
+            gameObject.GetComponent<Renderer>().material.color = Color.green;
+        }
         testCtrl.target_looked();
     }
 }

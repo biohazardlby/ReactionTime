@@ -357,11 +357,11 @@ PrefabInstance:
     - target: {fileID: 3380982, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1662561403}
+      objectReference: {fileID: 1682691655}
     - target: {fileID: 2348914, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1016461915}
+      objectReference: {fileID: 257831323}
     - target: {fileID: 2348914, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -400,6 +400,40 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 144643302}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &257831323
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &363770654
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e44cc6027828534ca5ef64346ea65c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FolderName: D:\Data\Boyuan_ReactionTime\GazeLog
+  FolderName: D:\Data\Boyuan_ReactionTime
   cameraTransform: {fileID: 593388165}
   PupilConnection: {fileID: 677657950}
   startWriting: 0
@@ -888,40 +922,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!21 &1016461915
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1025441785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,14 +1293,13 @@ MonoBehaviour:
   target_prefab: {fileID: 6706926762519686315, guid: 53f33760d0d82ff48942f1044c541416,
     type: 3}
   FolderName: D:\Data\Boyuan_ReactionTime
-  FileName: ReactionTime
   distance_gap: 0.5
   distance_level_min: 1
   distance_level_max: 4
   target_appear_time: 1.5
   target_scale: 1
+  react_to_gaze: 0
   origin_trans: {fileID: 1184499958}
-  currentDist: 0
 --- !u!1 &1343097310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1341,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2045919073}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &1662561403
+--- !u!43 &1682691655
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

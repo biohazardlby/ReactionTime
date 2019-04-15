@@ -8,21 +8,27 @@ public class TestCtrl : MonoBehaviour
 {
     public GameObject origin_prefab;
     public GameObject target_prefab;
-
+    [Header("Output Option")]
     public string FolderName = "D:\\Data\\Boyuan_ReactionTime";
-    public string FileName = "ReactionTime";
 
+    [Header("Parameter Setting")]
     public float distance_gap = 0.5f;
     public int distance_level_min = 1;
     public int distance_level_max = 4;
 
     public float target_appear_time = 1.5f;
     public float target_scale = 1.0f;
+
+    public bool react_to_gaze = false;
     public Transform origin_trans;
 
+
+
+
     private string OutputDir;
-    public float currentDist;
-    protected GameObject origin_gameObj;
+
+    float currentDist;
+    GameObject origin_gameObj;
 
     FileStream streams;
     FileStream trialStreams;
@@ -41,11 +47,11 @@ public class TestCtrl : MonoBehaviour
     void Start()
     {
         // create a folder 
-        string OutputDir = Path.Combine(FolderName, string.Concat(DateTime.Now.ToString("MM-dd-yyyy") + "-" + FileName));
+        string OutputDir = Path.Combine(FolderName, DateTime.Now.ToString("MM-dd-yyyy"));
         Directory.CreateDirectory(OutputDir);
 
         // create a file to record data
-        String trialOutput = Path.Combine(OutputDir, DateTime.Now.ToString("HH-mm") + ".txt");
+        String trialOutput = Path.Combine(OutputDir, DateTime.Now.ToString("HH-mm") + "-Reaction_Time.txt");
         trialStreams = new FileStream(trialOutput, FileMode.Create, FileAccess.Write);
 
 
@@ -181,6 +187,10 @@ public class TestCtrl : MonoBehaviour
         tar.transform.localScale = new Vector3(target_scale, target_scale, target_scale);
         Target target_mono = tar.GetComponent<Target>();
         target_mono.set_controller(this);
+        if (react_to_gaze)
+        {
+            target_mono.react_gaze = true;
+        }
         startTime = Time.realtimeSinceStartup;
     }
 }

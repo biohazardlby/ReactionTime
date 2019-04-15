@@ -18,7 +18,7 @@ namespace PupilLabs
     public class Gaze_Logger : MonoBehaviour
     {
 
-        public string FolderName = "D:\\Data\\Boyuan_ReactionTime\\GazeLog";
+        public string FolderName = "D:\\Data\\Boyuan_ReactionTime";
         private string OutputDir;
 
         //Things you want to write out, set them in the inspector
@@ -53,11 +53,11 @@ namespace PupilLabs
         void Start()
         {
             // create a folder 
-            string OutputDir = Path.Combine(FolderName, string.Concat(DateTime.Now.ToString("MM-dd-yyyy-HH-mm")));
+            string OutputDir = Path.Combine(FolderName, string.Concat(DateTime.Now.ToString("MM-dd-yyyy")));
             Directory.CreateDirectory(OutputDir);
 
             // create a file to record data
-            String trialOutput = Path.Combine(OutputDir, DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ".txt");
+            String trialOutput = Path.Combine(OutputDir, DateTime.Now.ToString("HH-mm") + "-Gaze_Info.txt");
             //String trialOutput = Path.Combine(OutputDir, "test.txt");
             trialStreams = new FileStream(trialOutput, FileMode.Create, FileAccess.Write);
 
