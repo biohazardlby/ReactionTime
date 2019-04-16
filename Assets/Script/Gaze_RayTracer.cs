@@ -17,13 +17,9 @@ namespace PupilLabs
 {
     public class Gaze_RayTracer : MonoBehaviour
     {
-
-
         public Transform cameraTransform;
 
         public SubscriptionsController PupilConnection;
-
-        public bool visualize_gaze;
 
         [Header("Debug")]
         public GameObject fake_eyeball;
@@ -43,29 +39,16 @@ namespace PupilLabs
         float plConfidence;
         float plTimeStamp;
 
-        LineRenderer line_render;
-
         string mode;
 
         void Start()
         {
-            line_render = GetComponent<LineRenderer>();
-            if (line_render == null)
-            {
-                Debug.LogWarning("No line renderer found in gaze raytracer");
-            }
-            else
-            {
-                line_render.positionCount = 2;
-                line_render.material = new Material(Shader.Find("Sprites/Default"));
-            }
-
-
             gazeListener = new GazeListener(PupilConnection);
             gazeListener.OnReceive3dGaze += ReceiveGaze;
             if (use_fake_eyeball)
             {
                 fake_eyeball = GameObject.Instantiate(fake_eyeball);
+                fake_eyeball.transform.Translate(0, 2, 0);
             }
         }
 
@@ -140,8 +123,6 @@ namespace PupilLabs
             //Vector3 eye_vec = Vector3.Normalize(plEIH1_xyz + plEIH1_xyz);
             if (!use_fake_eyeball)
             {
-                //line_render.SetPosition(0, cameraTransform.position);
-                //line_render.SetPosition(1, cameraTransform.position + cameraTransform.TransformDirection(eye_vec) * 10);
                 RaycastHit hit;
                 if (Physics.Raycast(cameraTransform.position, Vector3.Normalize(cameraTransform.rotation * plGiwVector_xyz), out hit, Mathf.Infinity, layerMask))
                 //if (Physics.Raycast(cameraTransform.position, cameraTransform.rotation * eye_vec, out hit, Mathf.Infinity, layerMask))
@@ -175,8 +156,6 @@ namespace PupilLabs
                     Debug.Log("Did not look");
                 }
             }
-
         }
-
     }
 }

@@ -1,0 +1,1 @@
+FrameNumber	sampleIdx	uTime	plConfidence	plTimestamp	plGiwVector_X	plGiwVector_Y	plGiwVector_Z	plEihVector0_X	plEihVector0_Y	plEihVector0_Z	plEihVector1_X	plEihVector1_Y	plEihVector1_Z	plEyeCenter0_X	plEyeCenter0_Y	plEyeCenter0_Z	plEyeCenter1_X	plEyeCenter1_Y	plEyeCenter1_Z	mode	

@@ -1,0 +1,5 @@
+4/16/2019 6:46:29 PM	The file contains time data of each successful point movement 
+The time is using Unity real time.
+-------------------------------------------------
+FrameNumber	StartTime	GazeTime	AimTime	GazeDuration	AimDuration	DistanceToOrigin
+32918	250.9858	270.9802	283.6883	19.99432	32.70245	1.741586

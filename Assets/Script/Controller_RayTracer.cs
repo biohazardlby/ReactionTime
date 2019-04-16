@@ -27,6 +27,7 @@ public class Controller_RayTracer : MonoBehaviour
         if (useFakeController)
         {
             fake_ctrl = GameObject.Instantiate(fake_ctrl);
+            fake_ctrl.transform.Translate(0, 1, 0);
         }
     }
 

@@ -66,6 +66,16 @@
     <Compile Include="Assets\Script\Origin.cs" />
     <Compile Include="Assets\Script\Target.cs" />
     <Compile Include="Assets\Script\TestCtrl.cs" />
+    <None Include="Assets\04-16-2019\18-43-Gaze_Info.txt" />
+    <None Include="Assets\04-16-2019\11-22-Reaction_Time_nogaze.txt" />
+    <None Include="Assets\04-16-2019\18-44-Gaze_Info.txt" />
+    <None Include="Assets\Used_data\11-22-Gaze_Info_idxed.txt" />
+    <None Include="Assets\Used_data\11-22-Reaction_Time_nogaze.txt" />
+    <None Include="Assets\04-16-2019\18-43-Reaction_Time.txt" />
+    <None Include="Assets\04-16-2019\18-44-Reaction_Time.txt" />
+    <None Include="Assets\04-16-2019\18-46-Gaze_Info.txt" />
+    <None Include="Assets\04-16-2019\18-46-Reaction_Time.txt" />
+    <None Include="Assets\04-16-2019\11-22-Gaze_Info_idxed.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Graduate/Boyuan_ReactionTime/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

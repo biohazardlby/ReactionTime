@@ -134,7 +134,7 @@ public class TestCtrl : MonoBehaviour
     /// <returns></returns>
     Vector3 randomTransform()
     {
-        currentDist = UnityEngine.Random.Range(distance_level_min, distance_level_max+1);
+        currentDist = UnityEngine.Random.Range(distance_level_min, distance_level_max);
         float rotate_deg = UnityEngine.Random.Range(0, 360);
         Vector3 tar_pos = Vector3.forward * currentDist;
         tar_pos = transform.rotation * tar_pos;
