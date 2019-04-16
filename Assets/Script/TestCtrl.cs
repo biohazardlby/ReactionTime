@@ -8,22 +8,18 @@ public class TestCtrl : MonoBehaviour
 {
     public GameObject origin_prefab;
     public GameObject target_prefab;
-    [Header("Output Option")]
-    public string FolderName = "D:\\Data\\Boyuan_ReactionTime";
+    [Header("Connection")]
+    public PupilLabs.Gaze_Logger gaze_logger;
 
     [Header("Parameter Setting")]
-    public float distance_gap = 0.5f;
-    public int distance_level_min = 1;
-    public int distance_level_max = 4;
+
+    public float distance_level_min = 1;
+    public float distance_level_max = 4;
 
     public float target_appear_time = 1.5f;
     public float target_scale = 1.0f;
 
     public bool react_to_gaze = false;
-    public Transform origin_trans;
-
-
-
 
     private string OutputDir;
 
@@ -47,7 +43,7 @@ public class TestCtrl : MonoBehaviour
     void Start()
     {
         // create a folder 
-        string OutputDir = Path.Combine(FolderName, DateTime.Now.ToString("MM-dd-yyyy"));
+        string OutputDir = Path.Combine(Application.dataPath, DateTime.Now.ToString("MM-dd-yyyy"));
         Directory.CreateDirectory(OutputDir);
 
         // create a file to record data
@@ -60,14 +56,8 @@ public class TestCtrl : MonoBehaviour
 
         //initiate origin
         origin_gameObj = GameObject.Instantiate(origin_prefab);
-        if (origin_trans == null)
-        {
-            origin_gameObj.transform.Translate(new Vector3(-4, 3, 0));
-        }
-        else
-        {
-            origin_gameObj.transform.Translate(origin_trans.position);
-        }
+
+        origin_gameObj.transform.Translate(transform.position);
         origin_gameObj.GetComponent<Origin>().setCtroller(this);
     }
 
@@ -144,16 +134,13 @@ public class TestCtrl : MonoBehaviour
     /// <returns></returns>
     Vector3 randomTransform()
     {
-        int dist_level = UnityEngine.Random.Range(distance_level_min, distance_level_max+1);
-        currentDist = dist_level * distance_gap;
+        currentDist = UnityEngine.Random.Range(distance_level_min, distance_level_max+1);
         float rotate_deg = UnityEngine.Random.Range(0, 360);
-        GameObject trans = new GameObject("targetTrans");
-        trans.transform.position = origin_gameObj.transform.position;
-        trans.transform.Translate(new Vector3(0, 0, currentDist));
-        trans.transform.RotateAround(origin_gameObj.transform.position, Vector3.left, rotate_deg);
-        Vector3 res = trans.transform.position;
-        Destroy(trans);
-        return res;
+        Vector3 tar_pos = Vector3.forward * currentDist;
+        tar_pos = transform.rotation * tar_pos;
+        tar_pos = Quaternion.Euler(rotate_deg, 0, 0) * tar_pos;
+        tar_pos = tar_pos + transform.position;
+        return tar_pos;
     }
     public void aimReset()
     {
@@ -176,6 +163,7 @@ public class TestCtrl : MonoBehaviour
         if (aim_ready && !hasAimed)
         {
             aimTime = Time.realtimeSinceStartup;
+            gaze_logger.stop_record();
             hasAimed = true;
         }
     }
@@ -192,5 +180,11 @@ public class TestCtrl : MonoBehaviour
             target_mono.react_gaze = true;
         }
         startTime = Time.realtimeSinceStartup;
+        gaze_logger.record();
+    }
+    public void OnApplicationQuit()
+    {
+        trialStreams.Close();
+
     }
 }

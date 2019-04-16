@@ -25,7 +25,9 @@ namespace PupilLabs
 
         public bool visualize_gaze;
 
-        public Transform fake_eyeball;
+        [Header("Debug")]
+        public GameObject fake_eyeball;
+        public bool use_fake_eyeball = false;
 
         //Initialize some containers
 
@@ -61,6 +63,10 @@ namespace PupilLabs
 
             gazeListener = new GazeListener(PupilConnection);
             gazeListener.OnReceive3dGaze += ReceiveGaze;
+            if (use_fake_eyeball)
+            {
+                fake_eyeball = GameObject.Instantiate(fake_eyeball);
+            }
         }
 
 
@@ -132,7 +138,7 @@ namespace PupilLabs
 
             int layerMask = 1 << 8;
             //Vector3 eye_vec = Vector3.Normalize(plEIH1_xyz + plEIH1_xyz);
-            if (fake_eyeball == null)
+            if (!use_fake_eyeball)
             {
                 //line_render.SetPosition(0, cameraTransform.position);
                 //line_render.SetPosition(1, cameraTransform.position + cameraTransform.TransformDirection(eye_vec) * 10);
@@ -152,10 +158,10 @@ namespace PupilLabs
             else
             {
                 RaycastHit hit;
-
-                if (Physics.Raycast(fake_eyeball.position, fake_eyeball.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+                Transform fake_eyeball_trans = fake_eyeball.transform;
+                if (Physics.Raycast(fake_eyeball_trans.position, fake_eyeball_trans.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
                 {
-                    Debug.DrawRay(fake_eyeball.position, fake_eyeball.TransformDirection(Vector3.forward) * hit.distance, Color.blue);
+                    Debug.DrawRay(fake_eyeball_trans.position, fake_eyeball_trans.TransformDirection(Vector3.forward) * hit.distance, Color.blue);
                     GameObject obj = hit.collider.gameObject;
                     if (obj.tag == "target")
                     {
@@ -165,7 +171,7 @@ namespace PupilLabs
                 }
                 else
                 {
-                    Debug.DrawRay(fake_eyeball.position, fake_eyeball.TransformDirection(Vector3.forward) * 1000, Color.red);
+                    Debug.DrawRay(fake_eyeball_trans.position, fake_eyeball_trans.TransformDirection(Vector3.forward) * 1000, Color.red);
                     Debug.Log("Did not look");
                 }
             }
