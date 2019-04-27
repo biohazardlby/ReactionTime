@@ -46,6 +46,7 @@ public class Controller_RayTracer : MonoBehaviour
         {
             if (Physics.Raycast(fake_ctrl.transform.position, fake_ctrl.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
+                Debug.DrawLine(fake_ctrl.transform.position, fake_ctrl.transform.position + fake_ctrl.transform.forward * 100);
                 GameObject obj = hit.collider.gameObject;
                 if (obj.tag == "origin")
                 {
